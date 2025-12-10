@@ -42,9 +42,14 @@ mongoengine.disconnect(alias='default')
 app = Flask(__name__)
 
 # specify MongoDB location details
+# app.config['MONGODB_SETTINGS'] = {
+#     'db': 'angelisland_db',
+#     'host': 'angelisland.melbell.uk',
+#     'port': 27017,
+# }
 app.config['MONGODB_SETTINGS'] = {
     'db': 'angelisland_db',
-    'host': 'angelisland.melbell.uk',
+    'host': "localhost",
     'port': 27017,
 }
 app.secret_key = 'some_key'
@@ -401,7 +406,7 @@ def main():
     ssl = SSLContext()
     print("running...")
     print(DIR_PATH)
-    app.run(ssl.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem'), debug=True)
+    app.run(port=5000, ssl_context=ssl.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem'), debug=True)
 
 
 if __name__ == '__main__':
