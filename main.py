@@ -50,7 +50,7 @@ app = Flask(__name__)
 # }
 app.config['MONGODB_SETTINGS'] = {
     'db': 'angelisland_db',
-    'host': "angelisland.melbell.uk",
+    'host': "localhost",
     'port': 27017,
 }
 app.secret_key = 'some_key'
