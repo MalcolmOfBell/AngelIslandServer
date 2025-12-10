@@ -10,7 +10,8 @@ from datetime import datetime
 from http import HTTPStatus
 from pprint import pprint
 from collections import Counter
-from ssl import SSLContext
+import ssl
+import socket
 
 import mongoengine
 from flask import Flask, request, jsonify, redirect, abort
@@ -60,9 +61,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 our_app_iters = 600_000
-
-# current directory
-DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # Password handling
 def set_password_hash(password):
@@ -403,10 +401,17 @@ def process_direct_message(sender: str, recipient: str, message: str, timestamp:
 # Start the app
 def main():
     """Runs the server software"""
-    ssl = SSLContext()
+
+    # Load CA certificate
+    ssl_settings = ssl.create_default_context()
+    ssl_settings.load_verify_locations("./cert.pem")
+    # ease python policy towards self-signed certificates
+    ssl_settings.verify_flags = ssl_settings.verify_flags & ~ssl.VERIFY_X509_STRICT
+    # load client certificate
+    ssl_settings.load_cert_chain(certfile='./cert.pem', keyfile='./key.pem')
+
     print("running...")
-    print(DIR_PATH)
-    app.run(port=5000, ssl_context=ssl.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem'), debug=True)
+    app.run(port=5000, ssl_context=ssl_settings, debug=True)
 
 
 if __name__ == '__main__':
