@@ -411,7 +411,11 @@ def main():
     # ease python policy towards self-signed certificates
     ssl_settings.verify_flags = ssl_settings.verify_flags & ~ssl.VERIFY_X509_STRICT
     # load client certificate
-    ssl_settings.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem')
+    try:
+        ssl_settings.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem')
+    except Exception as e:
+        print(f"Loading of cert chain failed: {e}")
+
 
     print("running...")
     app.run(port=5000, ssl_context=ssl_settings, debug=True)
