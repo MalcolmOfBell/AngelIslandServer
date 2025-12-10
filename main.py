@@ -406,7 +406,8 @@ def main():
     """Runs the server software"""
 
     # Load CA certificate
-    ssl_settings = ssl.create_default_context()
+    # ssl_settings = ssl.create_default_context()
+    ssl_settings = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     ssl_settings.load_verify_locations(DIR_PATH+"/cert.pem")
     # ease python policy towards self-signed certificates
     ssl_settings.verify_flags = ssl_settings.verify_flags & ~ssl.VERIFY_X509_STRICT
