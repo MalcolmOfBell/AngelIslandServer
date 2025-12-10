@@ -416,7 +416,6 @@ def main():
     except Exception as e:
         print(f"Loading of cert chain failed: {e}")
 
-
     print("running...")
     app.run(port=5000, ssl_context=ssl_settings, debug=True)
 
