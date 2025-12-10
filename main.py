@@ -1,6 +1,6 @@
 """Angel Island Server"""
 
-
+import os
 import hashlib
 import http.client as http_client
 import logging
@@ -55,6 +55,9 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 our_app_iters = 600_000
+
+# current directory
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 # Password handling
 def set_password_hash(password):
@@ -397,7 +400,7 @@ def main():
     """Runs the server software"""
     ssl = SSLContext()
     print("running...")
-    app.run(ssl.load_cert_chain(certfile='cert.pem', keyfile='key.pem'), debug=True)
+    app.run(ssl.load_cert_chain(certfile=DIR_PATH+'cert.pem', keyfile=DIR_PATH+'key.pem'), debug=True)
 
 
 if __name__ == '__main__':
