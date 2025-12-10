@@ -10,6 +10,7 @@ from datetime import datetime
 from http import HTTPStatus
 from pprint import pprint
 from collections import Counter
+from ssl import SSLContext
 
 import mongoengine
 from flask import Flask, request, jsonify, redirect, abort
@@ -23,8 +24,7 @@ http_client.HTTPConnection.debuglevel = 0
 
 # To generate a new Self-Signed Certificate:
 # openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem -config san.cnf
-# Reference: https://www.digitalocean.com/
-#   community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
+# Reference: https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
 
 logging.basicConfig(
     format="%(levelname)s [%(asctime)s] %(name)s - %(message)s",
@@ -36,6 +36,7 @@ logging.basicConfig(
 # mongoengine.connect("angelisland_db")
 
 mongoengine.disconnect(alias='default')
+
 # mongoengine.connect("angelisland_db", alias='default')
 
 app = Flask(__name__)
@@ -394,8 +395,9 @@ def process_direct_message(sender: str, recipient: str, message: str, timestamp:
 # Start the app
 def main():
     """Runs the server software"""
+    ssl = SSLContext()
     print("running...")
-    app.run(ssl_context=('cert.pem', 'key.pem'), debug=True)
+    app.run(ssl.load_cert_chain(certfile='cert.pem', keyfile='key.pem'), debug=True)
 
 
 if __name__ == '__main__':
