@@ -12,6 +12,7 @@ from pprint import pprint
 from collections import Counter
 import ssl
 import socket
+import json
 
 import mongoengine
 from flask import Flask, request, jsonify, redirect, abort
@@ -119,10 +120,11 @@ class User(db.Document):
         return str(self.id)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def create_new_user():
     """creates new user account"""
-    record = request.json
+    # record = request.json
+    record = json.loads(request.data.decode())
     username = record['username']
     email = record['email']
     try:
