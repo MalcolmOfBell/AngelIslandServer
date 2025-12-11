@@ -425,7 +425,7 @@ def main():
 
     print("running...")
     debug = False
-    app.run(host="192.168.1.41", port=5000, ssl_context=ssl_settings, debug=debug)
+    app.run(host="192.168.1.174", port=5000, ssl_context=ssl_settings, debug=debug)
 
 
 if __name__ == '__main__':
