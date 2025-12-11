@@ -119,7 +119,7 @@ class User(db.Document):
         return str(self.id)
 
 
-@app.route('/', methods=['PUT'])
+@app.route('/', methods=['POST'])
 def create_new_user():
     """creates new user account"""
     record = request.json
@@ -416,6 +416,9 @@ def main():
         ssl_settings.load_cert_chain(certfile=DIR_PATH+'/cert.pem', keyfile=DIR_PATH+'/key.pem')
     except Exception as e:
         print(f"Loading of cert chain failed: {e}")
+
+    # Build without ssl
+    ssl_settings = None
 
     print("running...")
     app.run(port=5000, ssl_context=ssl_settings, debug=True)
