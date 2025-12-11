@@ -28,12 +28,12 @@ http_client.HTTPConnection.debuglevel = 0
 # openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem -config san.cnf
 # Reference: https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
 
-# Logging
-logging.basicConfig(
-    format="%(levelname)s [%(asctime)s] %(name)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.DEBUG  # Can be DEBUG, INFO
-)
+# # Logging
+# logging.basicConfig(
+#     format="%(levelname)s [%(asctime)s] %(name)s - %(message)s",
+#     datefmt="%Y-%m-%d %H:%M:%S",
+#     level=logging.DEBUG  # Can be DEBUG, INFO
+# )
 
 # mongoengine.disconnect()
 # mongoengine.connect("angelisland_db")
