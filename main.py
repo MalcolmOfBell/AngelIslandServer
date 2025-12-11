@@ -121,7 +121,7 @@ class User(db.Document):
         return str(self.id)
 
 
-@app.route('/', methods=['PUT'])
+@app.route('/', methods=['POST'])
 def create_new_user():
     """creates new user account"""
     # record = request.json
